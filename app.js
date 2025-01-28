@@ -19,35 +19,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicPlayerContainer = document.querySelector('.music-player-container');
     const albumSidebarTitle = document.getElementById('album-sidebar-title');
     const sidebarPlaylist = document.getElementById('sidebar-playlist');
+    const playModeBtn = document.getElementById('play-mode-btn');
+    const playModeIcon = document.querySelector('.play-mode-icon');
 
-// Songs for the album
-const albumSongs = {
-    1: [
-        { title: 'A Stand that Existed', artist: 'TToU', url: 'aste.mp3' },
-        { title: 'Allocation Task Force', artist: 'TToU', url: 'Allocation%20Task%20Force.mp3' },
-        { title: 'Alternates', artist: 'TToU', url: 'Alternates.mp3' },
-        { title: 'Andr', artist: 'TToU', url: 'Andr.mp3' },
-        { title: 'Anywhere in The Universe', artist: 'TToU', url: 'Anywhere%20in%20The%20Universe.mp3' },
-        { title: 'Average Alternate', artist: 'TToU', url: 'Average%20Alternate.mp3' },
-        { title: 'Casual', artist: 'TToU', url: 'Casual.mp3' },
-        { title: 'Core of The Universe and All Knowledge', artist: 'TToU', url: 'Core%20of%20The%20Universe%20and%20All%20Knowledge.mp3' },
-        { title: 'Cyber Trap', artist: 'TToU', url: 'Cyber%20Trap.mp3' },
-        { title: 'Der Teemeister aus der Leere', artist: 'TToU', url: 'Der%20Teemeister%20aus%20der%20Leere.mp3' },
-        { title: 'Futuristic World', artist: 'TToU', url: 'Futuristic%20World.mp3' },
-        { title: 'G Foundation', artist: 'TToU', url: 'G%20Foundation.mp3' },
-        { title: 'G-033', artist: 'TToU', url: 'G-033.mp3' },
-        { title: 'G-Adv', artist: 'TToU', url: 'G-Adv.mp3' },
-        { title: 'Guardian of the Cosmos', artist: 'TToU', url: 'Guardian%20of%20the%20Cosmos.mp3' },
-        { title: 'H0RR0R', artist: 'TToU', url: 'H0RR0R.mp3' },
-        { title: 'Holyght', artist: 'TToU', url: 'Holyght.mp3' },
-        { title: 'I can see', artist: 'TToU', url: 'I%20can%20see.mp3' }
-    ]
-};
-
+    // Songs for the album
+    const albumSongs = {
+        1: [
+            { title: 'A Stand that Existed', artist: 'TToU', url: '/A Stand that Existed.mp3' },
+            { title: 'Allocation Task Force', artist: 'TToU', url: '/Allocation Task Force.mp3' },
+            { title: 'Alternates', artist: 'TToU', url: '/Alternates.mp3' },
+            { title: 'Andr', artist: 'TToU', url: '/Andr.mp3' },
+            { title: 'Anywhere in The Universe', artist: 'TToU', url: '/Anywhere in The Universe.mp3' },
+            { title: 'Average Alternate', artist: 'TToU', url: '/Average Alternate.mp3' },
+            { title: 'Casual', artist: 'TToU', url: '/Casual.mp3' },
+            { title: 'Core of The Universe and All Knowledge', artist: 'TToU', url: '/Core of The Universe and All Knowledge.mp3' },
+            { title: 'Cyber Trap', artist: 'TToU', url: '/Cyber Trap.mp3' },
+            { title: 'Der Teemeister aus der Leere', artist: 'TToU', url: '/Der Teemeister aus der Leere.mp3' },
+            { title: 'Futuristic World', artist: 'TToU', url: '/Futuristic World.mp3' },
+            { title: 'G Foundation', artist: 'TToU', url: '/G Foundation.mp3' },
+            { title: 'G-033', artist: 'TToU', url: '/G-033.mp3' },
+            { title: 'G-Adv', artist: 'TToU', url: '/G-Adv.mp3' },
+            { title: 'Guardian of the Cosmos', artist: 'TToU', url: '/Guardian of the Cosmos.mp3' },
+            { title: 'H0RR0R', artist: 'TToU', url: '/H0RR0R.mp3' },
+            { title: 'Holyght', artist: 'TToU', url: '/Holyght.mp3' },
+            { title: 'I can see', artist: 'TToU', url: '/I can see.mp3' }
+        ]
+    };
 
     let currentSongIndex = 0;
     let currentAlbum = 1;
     let songs = albumSongs[currentAlbum];
+    // Play mode states: 0 - Order, 1 - Loop, 2 - Random
+    let playMode = 0;
 
     // Theme toggle functionality
     lightModeBtn.addEventListener('click', () => {
@@ -163,6 +166,37 @@ const albumSongs = {
     // Update the album title in the sidebar
     albumSidebarTitle.textContent = 'The Tale of Universe OST';
 
+    // Play mode toggle
+    playModeBtn.addEventListener('click', () => {
+        playMode = (playMode + 1) % 3;
+        updatePlayModeIcon();
+    });
+
+    function updatePlayModeIcon() {
+        switch(playMode) {
+            case 0: // Order
+                playModeIcon.className = 'fas fa-sort-amount-up play-mode-icon';
+                break;
+            case 1: // Loop
+                playModeIcon.className = 'fas fa-repeat play-mode-icon';
+                break;
+            case 2: // Random
+                playModeIcon.className = 'fas fa-random play-mode-icon';
+                break;
+        }
+    }
+
+    function getNextSongIndex() {
+        switch(playMode) {
+            case 0: // Order
+                return (currentSongIndex + 1) % songs.length;
+            case 1: // Loop
+                return currentSongIndex;
+            case 2: // Random
+                return Math.floor(Math.random() * songs.length);
+        }
+    }
+
     // Play/Pause control
     playPauseBtn.addEventListener('click', () => {
         if (audioPlayer.paused) {
@@ -178,7 +212,7 @@ const albumSongs = {
 
     // Next and Previous controls
     nextBtn.addEventListener('click', () => {
-        currentSongIndex = (currentSongIndex + 1) % songs.length;
+        currentSongIndex = getNextSongIndex();
         playSong(currentSongIndex);
     });
 
@@ -216,6 +250,17 @@ const albumSongs = {
         audioPlayer.currentTime = time;
     });
 
+    audioPlayer.addEventListener('ended', () => {
+        if (playMode === 1) {
+            // Loop current song
+            audioPlayer.play();
+        } else {
+            // Move to next song
+            currentSongIndex = getNextSongIndex();
+            playSong(currentSongIndex);
+        }
+    });
+
     // Search functionality
     searchInput.addEventListener('input', (e) => {
         // Only filter if a playlist is currently visible
@@ -229,6 +274,9 @@ const albumSongs = {
             populatePlaylist(filteredSongs);
         }
     });
+
+    // Initialize play mode icon
+    updatePlayModeIcon();
 
     // Initial playlist population
     populatePlaylist(songs);
