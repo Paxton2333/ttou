@@ -355,18 +355,19 @@ body {
     font-size: 20px;
 }
 
-.play-mode-btn {
+.volume-control .loop-btn {
     background: none;
     border: none;
     color: var(--text-color);
     margin-right: 10px;
     cursor: pointer;
-    font-size: 20px;
-    transition: color 0.3s ease;
+    opacity: 0.5;
+    transition: color 0.3s, opacity 0.3s;
 }
 
-.play-mode-btn:hover {
+.volume-control .loop-btn.active {
     color: var(--secondary-color);
+    opacity: 1;
 }
 
 .sidebar {
