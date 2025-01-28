@@ -288,30 +288,6 @@ body {
     transform: scale(1.1);
 }
 
-.play-mode-btn {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    margin-right: 10px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: color 0.3s ease;
-    opacity: 0.7;
-}
-
-.play-mode-btn:hover {
-    opacity: 1;
-    color: var(--secondary-color);
-}
-
-.play-mode-icon {
-    transition: transform 0.3s ease;
-}
-
-.play-mode-btn:hover .play-mode-icon {
-    transform: scale(1.1);
-}
-
 .progress-container {
     display: flex;
     align-items: center;
@@ -377,6 +353,20 @@ body {
     margin-left: 10px;
     cursor: pointer;
     font-size: 20px;
+}
+
+.play-mode-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+.play-mode-btn:hover {
+    color: var(--secondary-color);
 }
 
 .sidebar {
