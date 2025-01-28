@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const albumSidebarTitle = document.getElementById('album-sidebar-title');
     const sidebarPlaylist = document.getElementById('sidebar-playlist');
     const playModeBtn = document.getElementById('play-mode-btn');
-    const playModeIcon = document.querySelector('.play-mode-icon');
+    const playModeIcon = document.getElementById('play-mode-icon');
 
     // Songs for the album
     const albumSongs = {
@@ -49,8 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSongIndex = 0;
     let currentAlbum = 1;
     let songs = albumSongs[currentAlbum];
-    // Play mode states: 0 - Order, 1 - Loop, 2 - Random
-    let playMode = 0;
+
+    // Play mode states: 'loop', 'random', 'normal'
+    const playModes = ['loop', 'random', 'normal'];
+    let currentPlayModeIndex = 0;
 
     // Theme toggle functionality
     lightModeBtn.addEventListener('click', () => {
@@ -97,6 +99,28 @@ document.addEventListener('DOMContentLoaded', () => {
             // Repopulate playlist
             populatePlaylist(songs);
         });
+    });
+
+    playModeBtn.addEventListener('click', () => {
+        // Cycle through play modes
+        currentPlayModeIndex = (currentPlayModeIndex + 1) % playModes.length;
+        const currentMode = playModes[currentPlayModeIndex];
+
+        // Update icon based on mode
+        switch(currentMode) {
+            case 'loop':
+                playModeIcon.classList.remove('fa-random', 'fa-play');
+                playModeIcon.classList.add('fa-repeat');
+                break;
+            case 'random':
+                playModeIcon.classList.remove('fa-repeat', 'fa-play');
+                playModeIcon.classList.add('fa-random');
+                break;
+            case 'normal':
+                playModeIcon.classList.remove('fa-repeat', 'fa-random');
+                playModeIcon.classList.add('fa-play');
+                break;
+        }
     });
 
     // Populate playlist
@@ -166,37 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update the album title in the sidebar
     albumSidebarTitle.textContent = 'The Tale of Universe OST';
 
-    // Play mode toggle
-    playModeBtn.addEventListener('click', () => {
-        playMode = (playMode + 1) % 3;
-        updatePlayModeIcon();
-    });
-
-    function updatePlayModeIcon() {
-        switch(playMode) {
-            case 0: // Order
-                playModeIcon.className = 'fas fa-sort-amount-up play-mode-icon';
-                break;
-            case 1: // Loop
-                playModeIcon.className = 'fas fa-repeat play-mode-icon';
-                break;
-            case 2: // Random
-                playModeIcon.className = 'fas fa-random play-mode-icon';
-                break;
-        }
-    }
-
-    function getNextSongIndex() {
-        switch(playMode) {
-            case 0: // Order
-                return (currentSongIndex + 1) % songs.length;
-            case 1: // Loop
-                return currentSongIndex;
-            case 2: // Random
-                return Math.floor(Math.random() * songs.length);
-        }
-    }
-
     // Play/Pause control
     playPauseBtn.addEventListener('click', () => {
         if (audioPlayer.paused) {
@@ -212,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Next and Previous controls
     nextBtn.addEventListener('click', () => {
-        currentSongIndex = getNextSongIndex();
+        currentSongIndex = (currentSongIndex + 1) % songs.length;
         playSong(currentSongIndex);
     });
 
@@ -250,14 +243,25 @@ document.addEventListener('DOMContentLoaded', () => {
         audioPlayer.currentTime = time;
     });
 
+    // Modify the end of song event to respect play mode
     audioPlayer.addEventListener('ended', () => {
-        if (playMode === 1) {
-            // Loop current song
-            audioPlayer.play();
-        } else {
-            // Move to next song
-            currentSongIndex = getNextSongIndex();
-            playSong(currentSongIndex);
+        const currentMode = playModes[currentPlayModeIndex];
+
+        switch(currentMode) {
+            case 'loop':
+                // Repeat current song
+                audioPlayer.play();
+                break;
+            case 'random':
+                // Play a random song
+                const randomIndex = Math.floor(Math.random() * songs.length);
+                playSong(randomIndex);
+                break;
+            case 'normal':
+                // Default behavior: move to next song
+                currentSongIndex = (currentSongIndex + 1) % songs.length;
+                playSong(currentSongIndex);
+                break;
         }
     });
 
@@ -274,9 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
             populatePlaylist(filteredSongs);
         }
     });
-
-    // Initialize play mode icon
-    updatePlayModeIcon();
 
     // Initial playlist population
     populatePlaylist(songs);
