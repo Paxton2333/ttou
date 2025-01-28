@@ -161,6 +161,7 @@ body {
     object-fit: cover;
     z-index: 1;
     border-radius: 50%;
+    display: none;
 }
 
 @keyframes rotate {
