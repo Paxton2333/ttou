@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicPlayerContainer = document.querySelector('.music-player-container');
     const albumSidebarTitle = document.getElementById('album-sidebar-title');
     const sidebarPlaylist = document.getElementById('sidebar-playlist');
-    const playModeBtn = document.getElementById('play-mode-btn');
-    const playModeIcon = document.getElementById('play-mode-icon');
+    const loopBtn = document.getElementById('loop-btn');
+    let isLooping = false;
 
     // Songs for the album
     const albumSongs = {
@@ -49,10 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSongIndex = 0;
     let currentAlbum = 1;
     let songs = albumSongs[currentAlbum];
-
-    // Play mode states: 'loop', 'random', 'normal'
-    const playModes = ['loop', 'random', 'normal'];
-    let currentPlayModeIndex = 0;
 
     // Theme toggle functionality
     lightModeBtn.addEventListener('click', () => {
@@ -99,28 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // Repopulate playlist
             populatePlaylist(songs);
         });
-    });
-
-    playModeBtn.addEventListener('click', () => {
-        // Cycle through play modes
-        currentPlayModeIndex = (currentPlayModeIndex + 1) % playModes.length;
-        const currentMode = playModes[currentPlayModeIndex];
-
-        // Update icon based on mode
-        switch(currentMode) {
-            case 'loop':
-                playModeIcon.classList.remove('fa-random', 'fa-play');
-                playModeIcon.classList.add('fa-repeat');
-                break;
-            case 'random':
-                playModeIcon.classList.remove('fa-repeat', 'fa-play');
-                playModeIcon.classList.add('fa-random');
-                break;
-            case 'normal':
-                playModeIcon.classList.remove('fa-repeat', 'fa-random');
-                playModeIcon.classList.add('fa-play');
-                break;
-        }
     });
 
     // Populate playlist
@@ -190,6 +164,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update the album title in the sidebar
     albumSidebarTitle.textContent = 'The Tale of Universe OST';
 
+    // Loop control
+    loopBtn.addEventListener('click', () => {
+        isLooping = !isLooping;
+        audioPlayer.loop = isLooping;
+        loopBtn.classList.toggle('active', isLooping);
+    });
+
+    audioPlayer.addEventListener('ended', () => {
+        if (!isLooping) {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            playSong(currentSongIndex);
+        }
+    });
+
     // Play/Pause control
     playPauseBtn.addEventListener('click', () => {
         if (audioPlayer.paused) {
@@ -241,28 +229,6 @@ document.addEventListener('DOMContentLoaded', () => {
     timeSlider.addEventListener('input', (e) => {
         const time = (e.target.value / 100) * audioPlayer.duration;
         audioPlayer.currentTime = time;
-    });
-
-    // Modify the end of song event to respect play mode
-    audioPlayer.addEventListener('ended', () => {
-        const currentMode = playModes[currentPlayModeIndex];
-
-        switch(currentMode) {
-            case 'loop':
-                // Repeat current song
-                audioPlayer.play();
-                break;
-            case 'random':
-                // Play a random song
-                const randomIndex = Math.floor(Math.random() * songs.length);
-                playSong(randomIndex);
-                break;
-            case 'normal':
-                // Default behavior: move to next song
-                currentSongIndex = (currentSongIndex + 1) % songs.length;
-                playSong(currentSongIndex);
-                break;
-        }
     });
 
     // Search functionality
