@@ -153,8 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: 'Undead Rising', artist: 'TToU', url: 'Undead%20Rising.mp3' },
             { title: 'Unforgettable Dreams', artist: 'TToU', url: 'Unforgettable%20Dreams.mp3' },
             { title: 'What', artist: 'TToU', url: 'What.mp3' },
-        ],
-        3: [
             { title: '86-79-73-68-32-115-32-65-80-80-82-79-65-67-72-73-78-71', artist: 'TToU', url: '86-79-73-68-32-73-83-32-65-80-80-82-79-65-67-72-73-78-71.mp3' },
             { title: 'Creek', artist: 'TToU', url: 'Creek.mp3' },
             { title: 'Distorta Inanis', artist: 'TToU', url: 'Distorta%20Inanis.mp3' },
