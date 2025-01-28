@@ -112,12 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: 'Watching us, Laughing at us', artist: 'TToU', url: 'Watching%20us%2C%20Laughing%20at%20us.mp3' },
             { title: 'Wretched Arm', artist: 'TToU', url: 'Wretched%20Arm.mp3' },
             { title: 'Xylo the Phone', artist: 'TToU', url: 'Xylo%20the%20Phone.mp3' },
-            { title: '', artist: 'TToU', url: '.mp3' },
-            { title: '', artist: 'TToU', url: '.mp3' },
-            { title: '', artist: 'TToU', url: '.mp3' },
-            { title: '', artist: 'TToU', url: '.mp3' }
-        ],
-        2: [
             { title: 'Buoyancy', artist: 'TToU', url: 'Buoyancy.mp3' },
             { title: 'C3RT41N', artist: 'TToU', url: 'C3RT41N.mp3' },
             { title: 'Core', artist: 'TToU', url: 'Core.mp3' },
