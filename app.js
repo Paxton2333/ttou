@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Songs for the album
 const albumSongs = {
     1: [
-        { title: 'A Stand that Existed', artist: 'TToU', url: 'A%20Stand%20that%20Existed.mp3' },
+        { title: 'A Stand that Existed', artist: 'TToU', url: 'aste.mp3' },
         { title: 'Allocation Task Force', artist: 'TToU', url: 'Allocation%20Task%20Force.mp3' },
         { title: 'Alternates', artist: 'TToU', url: 'Alternates.mp3' },
         { title: 'Andr', artist: 'TToU', url: 'Andr.mp3' },
