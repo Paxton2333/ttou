@@ -6,6 +6,71 @@
     <link rel="icon" type="image/jpeg" href="moon.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Add this to existing <style> section or styles.css */
+        .log-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1100;
+            transition: transform 0.2s ease;
+        }
+
+        .log-button:hover {
+            transform: scale(1.1);
+        }
+
+        .version-history-sidebar {
+            position: fixed;
+            top: 0;
+            left: -350px;
+            width: 350px;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), color-mix(in srgb, var(--primary-color) 90%, white));
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.2);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .version-history-sidebar.open {
+            left: 0;
+        }
+
+        .version-history-content {
+            color: var(--text-color);
+        }
+
+        .version-history-content h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .version-history-content ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .version-history-content li {
+            margin-bottom: 15px;
+            background-color: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
     <div class="music-player-container">
@@ -96,7 +161,39 @@
 
     <audio id="audio-player"></audio>
 
+    <div class="log-button" id="log-btn">Log</div>
+
+    <div class="version-history-sidebar" id="version-history-sidebar">
+        <div class="version-history-content">
+            <h3>Version History</h3>
+            <ul>
+                <li>V0.1 - 1/28/2025: Created "P4XT0N Series", added Songs and all functions of a player</li>
+                <li>V0.2 - 1/29/2025: Added Login Panel, leading to another page</li>
+            </ul>
+        </div>
+    </div>
+
     <script src="app.js" type="module"></script>
     <script src="login.js" type="module"></script>
+    <script>
+        // Add this script to your existing script or create a new log.js
+        document.addEventListener('DOMContentLoaded', () => {
+            const logBtn = document.getElementById('log-btn');
+            const versionHistorySidebar = document.getElementById('version-history-sidebar');
+
+            logBtn.addEventListener('click', () => {
+                versionHistorySidebar.classList.toggle('open');
+            });
+
+            // Close version history when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!versionHistorySidebar.contains(event.target) && 
+                    !logBtn.contains(event.target) && 
+                    versionHistorySidebar.classList.contains('open')) {
+                    versionHistorySidebar.classList.remove('open');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
