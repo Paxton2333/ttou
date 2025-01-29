@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('password').value;
 
         if (username === 'Administrator' && password === 'Admin') {
-            // Redirect to panel page
-            window.location.href = 'panel.html';
+            // Redirect to new URL
+            window.location.href = 'https://paxton2333.github.io/ttou-logged';
         } else {
             // Show error message
             loginError.textContent = 'Wrong Username or Password, Please try again!';
