@@ -59,6 +59,22 @@
                 <button id="playlist-toggle"><i class="fas fa-bars"></i></button>
             </div>
         </div>
+        
+        <div class="login-icon-menu">
+            <div class="login-icon" id="login-trigger">L</div>
+        </div>
+    </div>
+
+    <div id="login-modal" class="login-modal">
+        <div class="login-container">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+                <p id="login-error" class="error-message"></p>
+            </form>
+        </div>
     </div>
 
     <div class="sidebar">
@@ -81,5 +97,6 @@
     <audio id="audio-player"></audio>
 
     <script src="app.js" type="module"></script>
+    <script src="login.js" type="module"></script>
 </body>
 </html>
