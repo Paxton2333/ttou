@@ -369,6 +369,20 @@ body {
     color: var(--secondary-color);
 }
 
+.volume-control #download-song-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+.volume-control #download-song-btn:hover {
+    color: var(--secondary-color);
+}
+
 .sidebar {
     position: fixed;
     top: 0;
