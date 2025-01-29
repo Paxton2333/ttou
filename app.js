@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchResultsSidebar = document.querySelector('.search-results-sidebar');
     const searchResultsList = document.getElementById('search-results-list');
     const closeSearchResultsBtn = document.getElementById('close-search-results');
+    const downloadSongBtn = document.getElementById('download-song-btn');
 
     // Play mode constants
     const PLAY_MODES = {
@@ -112,6 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: 'Watching us, Laughing at us', artist: 'TToU', url: 'Watching%20us%2C%20Laughing%20at%20us.mp3' },
             { title: 'Wretched Arm', artist: 'TToU', url: 'Wretched%20Arm.mp3' },
             { title: 'Xylo the Phone', artist: 'TToU', url: 'Xylo%20the%20Phone.mp3' },
+            { title: '', artist: 'TToU', url: '.mp3' },
+            { title: '', artist: 'TToU', url: '.mp3' },
+            { title: '', artist: 'TToU', url: '.mp3' },
+            { title: '', artist: 'TToU', url: '.mp3' }
+        ],
+        2: [
             { title: 'Buoyancy', artist: 'TToU', url: 'Buoyancy.mp3' },
             { title: 'C3RT41N', artist: 'TToU', url: 'C3RT41N.mp3' },
             { title: 'Core', artist: 'TToU', url: 'Core.mp3' },
@@ -153,7 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: 'Undead Rising', artist: 'TToU', url: 'Undead%20Rising.mp3' },
             { title: 'Unforgettable Dreams', artist: 'TToU', url: 'Unforgettable%20Dreams.mp3' },
             { title: 'What', artist: 'TToU', url: 'What.mp3' },
-            { title: '86-79-73-68-32-73-83-32-65-80-80-82-79-65-67-72-73-78-71', artist: 'TToU', url: '86-79-73-68-32-73-83-32-65-80-80-82-79-65-67-72-73-78-71.mp3' },
+        ],
+        3: [
+            { title: '86-79-73-68-32-115-32-65-80-80-82-79-65-67-72-73-78-71', artist: 'TToU', url: '86-79-73-68-32-73-83-32-65-80-80-82-79-65-67-72-73-78-71.mp3' },
             { title: 'Creek', artist: 'TToU', url: 'Creek.mp3' },
             { title: 'Distorta Inanis', artist: 'TToU', url: 'Distorta%20Inanis.mp3' },
             { title: 'Gardeners', artist: 'TToU', url: 'Gardeners.mp3' },
@@ -377,6 +386,22 @@ document.addEventListener('DOMContentLoaded', () => {
     timeSlider.addEventListener('input', (e) => {
         const time = (e.target.value / 100) * audioPlayer.duration;
         audioPlayer.currentTime = time;
+    });
+
+    // Download current song functionality
+    downloadSongBtn.addEventListener('click', () => {
+        // If no song is playing, return early
+        if (!songs[currentSongIndex]) return;
+
+        const currentSong = songs[currentSongIndex];
+        const downloadLink = document.createElement('a');
+        
+        // Use the current song's URL to create download
+        downloadLink.href = currentSong.url;
+        downloadLink.download = `${currentSong.title || 'Unknown Track'} - ${currentSong.artist}.mp3`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
     });
 
     // Function to perform search across all albums
