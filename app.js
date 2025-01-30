@@ -163,7 +163,23 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: 'Nty', artist: 'TToU', url: 'Nty.mp3' },
             { title: 'The time is up', artist: 'TToU', url: 'The%20time%20is%20up.mp3' },
             { title: 'Unbreakable Charge', artist: 'TToU', url: 'Unbreakable%20Charge.mp3' },
-            { title: 'Wave', artist: 'TToU', url: 'Wave.mp3' }
+            { title: 'Wave', artist: 'TToU', url: 'Wave.mp3' },
+            { title: 'CH1LL1NG', artist: 'TToU', url: 'CH1LL1NG.mp3' },
+            { title: '1N73RN4L', artist: 'TToU', url: '1N73RN4L.mp3' },
+            { title: '1934', artist: 'TToU', url: '1934.mp3' },
+            { title: '1478', artist: 'TToU', url: '1478.mp3' },
+            { title: 'Tyance', artist: 'TToU', url: 'Tyance.mp3' },
+            { title: 'Rhapsody', artist: 'TToU', url: 'Rhapsody.mp3' },
+            { title: 'Renting Support', artist: 'TToU', url: 'Renting%20Support.mp3' },
+            { title: 'Drifting', artist: 'TToU', url: 'Drifting.mp3' },
+            { title: 'On Call', artist: 'TToU', url: 'On%20Call.mp3' },
+            { title: 'Driving', artist: 'TToU', url: 'Driving.mp3' },
+            { title: 'Yeh', artist: 'TToU', url: 'Yeh.mp3' },
+            { title: 'Neh', artist: 'TToU', url: 'Neh.mp3' },
+            { title: 'Ech', artist: 'TToU', url: 'Ech.mp3' },
+            { title: 'H4TR3D', artist: 'TToU', url: 'H4TR3D.mp3' },
+            { title: 'Hopk', artist: 'TToU', url: 'Hopk.mp3' },
+            { title: 'Pohk', artist: 'TToU', url: 'Pohk.mp3' }
         ]
     };
 
