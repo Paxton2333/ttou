@@ -38,8 +38,8 @@
             background: linear-gradient(135deg, var(--primary-color), color-mix(in srgb, var(--primary-color) 90%, white));
             transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
-            box-shadow: 10px 0 30px rgba(0,0,0,0.2);
-            border-right: 1px solid rgba(255,255,255,0.1);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+            border-left: 1px solid rgba(255,255,255,0.1);
             display: flex;
             flex-direction: column;
             padding: 20px;
@@ -48,55 +48,99 @@
 
         .version-history-sidebar.open {
             left: 0;
+            animation: slideInFromLeft 0.4s ease-out;
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                left: -350px;
+                opacity: 0;
+            }
+            to {
+                left: 0;
+                opacity: 1;
+            }
         }
 
         .version-history-content {
             color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
         .version-history-content h3 {
             color: var(--secondary-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary-color);
             margin-bottom: 15px;
         }
 
         .version-history-content ul {
             list-style-type: none;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
         .version-history-content li {
-            margin-bottom: 15px;
             background-color: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .download-albums-btn {
+        .version-history-content li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
             background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
-            transition: background-color 0.3s;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.3s ease;
         }
 
-        .download-albums-btn:hover {
-            background-color: color-mix(in srgb, var(--secondary-color) 80%, white);
+        .version-history-content li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .version-history-content li:hover::before {
+            transform: scaleY(1);
+        }
+
+        .version-history-content li span.version-date {
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .version-history-content li span.version-description {
+            color: var(--text-color);
+            opacity: 0.8;
         }
 
         .download-albums-modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.5);
-            display: none;
+            z-index: 2000;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
         }
 
         .download-albums-modal.show {
@@ -105,35 +149,88 @@
         }
 
         .download-albums-container {
-            background-color: var(--background-color);
+            background-color: var(--primary-color);
             padding: 30px;
-            border-radius: 10px;
-            width: 400px;
-            max-height: 70vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 15px;
+            width: 500px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+            position: relative;
+            border: 2px solid var(--secondary-color);
         }
 
         .download-albums-container h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: var(--secondary-color);
+            font-size: 1.8rem;
+            letter-spacing: 1px;
         }
 
-        .download-album-option {
-            background-color: var(--primary-color);
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .album-download-option {
+            background-color: rgba(255,255,255,0.05);
             color: var(--text-color);
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .download-album-option:hover {
+        .album-download-option:hover {
             background-color: var(--secondary-color);
             color: white;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .album-download-option::before {
+            content: '\f019';  /* download icon */
+            font-family: 'Font Awesome 5 Free';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            font-size: 60px;
+            color: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .album-download-option:hover::before {
+            top: 10px;
+            right: 10px;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .album-download-option .album-tracks-count {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .download-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .download-close-btn:hover {
+            color: var(--secondary-color);
         }
     </style>
 </head>
@@ -146,7 +243,7 @@
                     <button id="light-mode-btn" class="theme-btn">Light</button>
                     <button id="dark-mode-btn" class="theme-btn active">Dark</button>
                 </div>
-                <button id="download-albums-btn" class="download-albums-btn">Download Albums</button>
+                <button id="download-albums-btn" class="theme-btn">Download Albums</button>
             </div>
             <div class="search-bar">
                 <input type="text" placeholder="Search songs..." id="search-input">
@@ -233,33 +330,39 @@
         <div class="version-history-content">
             <h3>Version History</h3>
             <ul>
-                <li>V0.1 - 1/28/2025: Created "P4XT0N Series", added Songs and all functions of a player</li>
-                <li>V0.2 - 1/29/2025: Added Login Panel, leading to another page</li>
-                <li>V0.3 - 2/1/2025: Added 16 new tracks: CH1LL1NG, 1N73RN4L, 1934, 1478, Tyance, Rhapsody, Renting Support, Drifting, On Call, Driving, Yeh, Neh, Ech, H4TR3D, Hopk, Pohk</li>
+                <li><span class="version-date">V1 - 1/28/2025:</span> <span class="version-description">Created "P4XT0N Series", added Songs and all functions of a player</span></li>
+                <li><span class="version-date">V2 - 1/29/2025:</span> <span class="version-description">Added Login Panel, leading to another page</span></li>
+                <li><span class="version-date">V3 - 1/30/2025:</span> <span class="version-description">Added 16 new tracks: CH1LL1NG, 1N73RN4L, 1934, 1478, Tyance, Rhapsody, Renting Support, Drifting, On Call, Driving, Yeh, Neh, Ech, H4TR3D, Hopk, Pohk</span></li>
+                <li><span class="version-date">V4 - 1/31/2025:</span> <span class="version-description">Refined download albums functionality, added better UI for downloading albums, created W.I.P. album placeholder</span></li>
             </ul>
         </div>
     </div>
 
-    <!-- Download Albums Modal -->
     <div id="download-albums-modal" class="download-albums-modal">
         <div class="download-albums-container">
+            <button class="download-close-btn" id="close-download-modal">&times;</button>
             <h2>Download Albums</h2>
-            <div id="download-albums-list"></div>
+            <div class="albums-grid" id="albums-grid">
+                <button class="album-download-option" data-album="1">
+                    <span>The Tale of Universe OST</span>
+                    <span class="album-tracks-count">125 Tracks</span>
+                </button>
+            </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="app.js" type="module"></script>
     <script src="login.js" type="module"></script>
-    <script src="download-albums.js" type="module"></script>
     <script>
-        // Add this script to your existing script or create a new log.js
         document.addEventListener('DOMContentLoaded', () => {
             const logBtn = document.getElementById('log-btn');
             const versionHistorySidebar = document.getElementById('version-history-sidebar');
-
-            logBtn.addEventListener('click', () => {
-                versionHistorySidebar.classList.toggle('open');
-            });
+            const downloadAlbumsBtn = document.getElementById('download-albums-btn');
+            const downloadAlbumsModal = document.getElementById('download-albums-modal');
+            const closeDownloadModalBtn = document.getElementById('close-download-modal');
+            const albumsGrid = document.getElementById('albums-grid');
 
             // Close version history when clicking outside
             document.addEventListener('click', (event) => {
@@ -269,6 +372,80 @@
                     versionHistorySidebar.classList.remove('open');
                 }
             });
+
+            logBtn.addEventListener('click', () => {
+                versionHistorySidebar.classList.toggle('open');
+            });
+
+            // Close modal when clicking close button
+            closeDownloadModalBtn.addEventListener('click', () => {
+                downloadAlbumsModal.classList.remove('show');
+            });
+
+            // Close modal when clicking outside
+            downloadAlbumsModal.addEventListener('click', (e) => {
+                if (e.target === downloadAlbumsModal) {
+                    downloadAlbumsModal.classList.remove('show');
+                }
+            });
+
+            // Open download albums modal
+            downloadAlbumsBtn.addEventListener('click', () => {
+                downloadAlbumsModal.classList.add('show');
+            });
+
+            // Function to download album
+            async function downloadAlbum(albumId) {
+                const albumSongs = {
+                    1: [
+                        // Existing TToU OST tracks
+                    ]
+                };
+
+                const zip = new JSZip();
+                const albumFolder = zip.folder(`Album_${albumId}`);
+
+                const albumNames = {
+                    1: 'The Tale of Universe OST'
+                };
+
+                // Async download of each song
+                const downloadPromises = albumSongs[albumId].map(async (song) => {
+                    try {
+                        const response = await fetch(song.url);
+                        const blob = await response.blob();
+                        albumFolder.file(encodeURIComponent(song.title) + '.mp3', blob);
+                    } catch (error) {
+                        console.error(`Failed to download ${song.title}:`, error);
+                    }
+                });
+
+                // Wait for all downloads to complete
+                await Promise.all(downloadPromises);
+
+                // Generate zip
+                const zipBlob = await zip.generateAsync({type: 'blob'});
+                saveAs(zipBlob, `P4XT0N_Series_${albumNames[albumId]}.zip`);
+
+                // Close the modal after download
+                downloadAlbumsModal.classList.remove('show');
+            }
+
+            // Album download functionality
+            albumsGrid.addEventListener('click', async (e) => {
+                if (e.target.classList.contains('album-download-option')) {
+                    const albumId = e.target.dataset.album;
+                    await downloadAlbum(albumId);
+                }
+            });
+
+            // Update albums grid
+            albumsGrid.innerHTML = `
+                <button class="album-download-option" data-album="1">
+                    <span>The Tale of Universe OST</span>
+                    <span class="album-tracks-count">125 Tracks</span>
+                </button>
+            `;
         });
     </script>
 </body>
