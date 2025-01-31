@@ -70,6 +70,71 @@
             padding: 15px;
             border-radius: 8px;
         }
+
+        .download-albums-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .download-albums-btn:hover {
+            background-color: color-mix(in srgb, var(--secondary-color) 80%, white);
+        }
+
+        .download-albums-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .download-albums-modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .download-albums-container {
+            background-color: var(--background-color);
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            max-height: 70vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .download-albums-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        .download-album-option {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .download-album-option:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -81,6 +146,7 @@
                     <button id="light-mode-btn" class="theme-btn">Light</button>
                     <button id="dark-mode-btn" class="theme-btn active">Dark</button>
                 </div>
+                <button id="download-albums-btn" class="download-albums-btn">Download Albums</button>
             </div>
             <div class="search-bar">
                 <input type="text" placeholder="Search songs..." id="search-input">
@@ -169,13 +235,22 @@
             <ul>
                 <li>V0.1 - 1/28/2025: Created "P4XT0N Series", added Songs and all functions of a player</li>
                 <li>V0.2 - 1/29/2025: Added Login Panel, leading to another page</li>
-                <li>V0.3 - 1/30/2025: Added 16 new tracks: CH1LL1NG, 1N73RN4L, 1934, 1478, Tyance, Rhapsody, Renting Support, Drifting, On Call, Driving, Yeh, Neh, Ech, H4TR3D, Hopk, Pohk</li>
+                <li>V0.3 - 2/1/2025: Added 16 new tracks: CH1LL1NG, 1N73RN4L, 1934, 1478, Tyance, Rhapsody, Renting Support, Drifting, On Call, Driving, Yeh, Neh, Ech, H4TR3D, Hopk, Pohk</li>
             </ul>
+        </div>
+    </div>
+
+    <!-- Download Albums Modal -->
+    <div id="download-albums-modal" class="download-albums-modal">
+        <div class="download-albums-container">
+            <h2>Download Albums</h2>
+            <div id="download-albums-list"></div>
         </div>
     </div>
 
     <script src="app.js" type="module"></script>
     <script src="login.js" type="module"></script>
+    <script src="download-albums.js" type="module"></script>
     <script>
         // Add this script to your existing script or create a new log.js
         document.addEventListener('DOMContentLoaded', () => {
