@@ -232,6 +232,126 @@
         .download-close-btn:hover {
             color: var(--secondary-color);
         }
+
+        /* Secret Z Button Styles */
+        .secret-z-button {
+            position: fixed;
+            bottom: -50px;
+            right: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px 0 0 10px;
+            cursor: pointer;
+            transition: bottom 0.3s ease, transform 0.2s ease;
+            z-index: 1200;
+            font-weight: bold;
+            box-shadow: -5px 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .secret-z-button:hover {
+            transform: scale(1.1);
+        }
+
+        .secret-z-button.visible {
+            bottom: 20px;
+        }
+
+        /* Tic Tac Toe Modal Styles */
+        .tic-tac-toe-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tic-tac-toe-modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .tic-tac-toe-container {
+            background-color: var(--primary-color);
+            padding: 30px;
+            border-radius: 15px;
+            width: 400px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+            text-align: center;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .tic-tac-toe-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .tic-tac-toe-cell {
+            background-color: rgba(255,255,255,0.1);
+            border: 2px solid var(--secondary-color);
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 3rem;
+            color: var(--text-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .tic-tac-toe-cell:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .game-status {
+            margin-top: 20px;
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+
+        .close-tic-tac-toe-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-tic-tac-toe-btn:hover {
+            color: var(--secondary-color);
+        }
+
+        .tic-tac-toe-victory-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            flex-direction: column;
+            font-size: 2rem;
+        }
     </style>
 </head>
 <body>
@@ -333,7 +453,9 @@
                 <li><span class="version-date">V1 - 1/28/2025:</span> <span class="version-description">Created "P4XT0N Series", added Songs and all functions of a player</span></li>
                 <li><span class="version-date">V2 - 1/29/2025:</span> <span class="version-description">Added Login Panel, leading to another page</span></li>
                 <li><span class="version-date">V3 - 1/30/2025:</span> <span class="version-description">Added 16 new tracks: CH1LL1NG, 1N73RN4L, 1934, 1478, Tyance, Rhapsody, Renting Support, Drifting, On Call, Driving, Yeh, Neh, Ech, H4TR3D, Hopk, Pohk</span></li>
-                <li><span class="version-date">V4 - 1/31/2025:</span> <span class="version-description">Refined download albums functionality, added better UI for downloading albums, created W.I.P. album placeholder</span></li>
+                <li><span class="version-date">V4 - 1/31/2025:</span> <span class="version-description">Refined download albums functionality, added better UI for downloading albums, created W.I.P. album placeholder
+(STILL WIP, DOWNLOADING ALBUM ISN't FULLY WORKING!!!!)</span></li>
+                <li><span class="version-date">V5 - 2/3/2025:</span> <span class="version-description">Added Tic Tac Toe mini-game with secret Z button, implemented computer AI logic, added victory modal for player wins</span></li>
             </ul>
         </div>
     </div>
@@ -351,6 +473,55 @@
         </div>
     </div>
 
+    <div class="secret-z-button" id="secret-z-button">Z</div>
+
+    <div id="tic-tac-toe-modal" class="tic-tac-toe-modal">
+        <div class="tic-tac-toe-container">
+            <button class="close-tic-tac-toe-btn" id="close-tic-tac-toe-btn">&times;</button>
+            <h2>Tic Tac Toe</h2>
+            <div class="tic-tac-toe-board" id="tic-tac-toe-board"></div>
+            <div class="game-status" id="game-status">Player X's Turn</div>
+            <button id="restart-tic-tac-toe" style="
+                margin-top: 10px;
+                padding: 10px 20px;
+                background-color: var(--secondary-color);
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            ">Restart Game</button>
+        </div>
+    </div>
+
+    <div id="tic-tac-toe-victory-modal" class="tic-tac-toe-victory-modal" style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.9);
+        z-index: 3000;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+        flex-direction: column;
+        font-size: 2rem;
+    ">
+        <h1>Congratulations!</h1>
+        <p>You Won the Tic Tac Toe Game!</p>
+        <button id="victory-close-btn" style="
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        ">Close</button>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="app.js" type="module"></script>
@@ -363,6 +534,15 @@
             const downloadAlbumsModal = document.getElementById('download-albums-modal');
             const closeDownloadModalBtn = document.getElementById('close-download-modal');
             const albumsGrid = document.getElementById('albums-grid');
+
+            const secretZButton = document.getElementById('secret-z-button');
+            const ticTacToeModal = document.getElementById('tic-tac-toe-modal');
+            const closeTicTacToeBtn = document.getElementById('close-tic-tac-toe-btn');
+            const ticTacToeBoard = document.getElementById('tic-tac-toe-board');
+            const gameStatus = document.getElementById('game-status');
+            const restartTicTacToeBtn = document.getElementById('restart-tic-tac-toe');
+            const ticTacToeVictoryModal = document.getElementById('tic-tac-toe-victory-modal');
+            const victoryCloseBtn = document.getElementById('victory-close-btn');
 
             // Close version history when clicking outside
             document.addEventListener('click', (event) => {
@@ -446,6 +626,155 @@
                     <span class="album-tracks-count">125 Tracks</span>
                 </button>
             `;
+
+            // Reveal secret Z button when cursor is near
+            document.addEventListener('mousemove', (e) => {
+                const windowWidth = window.innerWidth;
+                const windowHeight = window.innerHeight;
+                const threshold = 100; // pixels from the bottom right corner
+
+                if (e.clientX > windowWidth - threshold && e.clientY > windowHeight - threshold) {
+                    secretZButton.classList.add('visible');
+                } else {
+                    secretZButton.classList.remove('visible');
+                }
+            });
+
+            // Open Tic Tac Toe Modal
+            secretZButton.addEventListener('click', () => {
+                ticTacToeModal.classList.add('show');
+                initializeTicTacToe();
+            });
+
+            // Close Tic Tac Toe Modal
+            closeTicTacToeBtn.addEventListener('click', () => {
+                ticTacToeModal.classList.remove('show');
+            });
+
+            // Restart Tic Tac Toe game
+            restartTicTacToeBtn.addEventListener('click', () => {
+                ticTacToeBoard.innerHTML = '';
+                gameStatus.textContent = 'Player X\'s Turn';
+                initializeTicTacToe();
+            });
+
+            // Close Tic Tac Toe Victory Modal
+            victoryCloseBtn.addEventListener('click', () => {
+                ticTacToeVictoryModal.style.display = 'none';
+            });
+
+            function initializeTicTacToe() {
+                const board = ['', '', '', '', '', '', '', '', ''];
+                let currentPlayer = 'X';
+                let gameActive = true;
+
+                // Create board cells
+                ticTacToeBoard.innerHTML = '';
+                for (let i = 0; i < 9; i++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('tic-tac-toe-cell');
+                    cell.dataset.index = i;
+                    cell.addEventListener('click', () => handleCellClick(cell, i));
+                    ticTacToeBoard.appendChild(cell);
+                }
+
+                function handleCellClick(cell, index) {
+                    if (!gameActive || board[index] !== '') return;
+
+                    board[index] = currentPlayer;
+                    cell.textContent = currentPlayer;
+
+                    if (checkGameStatus()) return;
+
+                    computerMove();
+                }
+
+                function computerMove() {
+                    if (!gameActive) return;
+
+                    const winningMove = findWinningMove('O');
+                    if (winningMove !== -1) {
+                        makeMove(winningMove, 'O');
+                        return;
+                    }
+
+                    const blockingMove = findWinningMove('X');
+                    if (blockingMove !== -1) {
+                        makeMove(blockingMove, 'O');
+                        return;
+                    }
+
+                    if (board[4] === '') {
+                        makeMove(4, 'O');
+                        return;
+                    }
+
+                    const corners = [0, 2, 6, 8];
+                    const availableCorners = corners.filter(index => board[index] === '');
+                    if (availableCorners.length > 0) {
+                        makeMove(availableCorners[Math.floor(Math.random() * availableCorners.length)], 'O');
+                        return;
+                    }
+
+                    const sides = [1, 3, 5, 7];
+                    const availableSides = sides.filter(index => board[index] === '');
+                    if (availableSides.length > 0) {
+                        makeMove(availableSides[Math.floor(Math.random() * availableSides.length)], 'O');
+                        return;
+                    }
+                }
+
+                function makeMove(index, player) {
+                    board[index] = player;
+                    const cell = ticTacToeBoard.querySelector(`[data-index="${index}"]`);
+                    cell.textContent = player;
+                    checkGameStatus();
+                }
+
+                function findWinningMove(player) {
+                    const winPatterns = [
+                        [0, 1, 2], [3, 4, 5], [6, 7, 8], 
+                        [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+                        [0, 4, 8], [2, 4, 6] 
+                    ];
+
+                    for (const pattern of winPatterns) {
+                        const [a, b, c] = pattern;
+                        if (board[a] === player && board[b] === player && board[c] === '') return c;
+                        if (board[a] === player && board[c] === player && board[b] === '') return b;
+                        if (board[b] === player && board[c] === player && board[a] === '') return a;
+                    }
+                    return -1;
+                }
+
+                function checkGameStatus() {
+                    const winPatterns = [
+                        [0, 1, 2], [3, 4, 5], [6, 7, 8], 
+                        [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+                        [0, 4, 8], [2, 4, 6] 
+                    ];
+
+                    for (const pattern of winPatterns) {
+                        const [a, b, c] = pattern;
+                        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                            gameStatus.textContent = `Player ${board[a]} Wins!`;
+                            gameActive = false;
+                            if (board[a] === 'X') {
+                                ticTacToeVictoryModal.style.display = 'flex';
+                            }
+                            return true;
+                        }
+                    }
+
+                    if (board.every(cell => cell !== '')) {
+                        gameStatus.textContent = "It's a Draw!";
+                        gameActive = false;
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
         });
     </script>
 </body>
