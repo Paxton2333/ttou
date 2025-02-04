@@ -352,6 +352,56 @@
             flex-direction: column;
             font-size: 2rem;
         }
+        
+        /* Cheat Code Styles */
+        .cheat-code-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .cheat-code-section input {
+            padding: 8px;
+            width: 150px;
+            border: 1px solid var(--secondary-color);
+            border-radius: 5px;
+            background-color: rgba(255,255,255,0.1);
+            color: var(--text-color);
+        }
+
+        .cheat-code-section button {
+            padding: 8px 15px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cheat-code-section button:hover {
+            background-color: color-mix(in srgb, var(--secondary-color) 80%, white);
+        }
+
+        /* New 333 Modal Styles */
+        .three-three-three-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            color: red;
+            text-align: center;
+            font-size: 10rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -456,6 +506,8 @@
                 <li><span class="version-date">V4 - 1/31/2025:</span> <span class="version-description">Refined download albums functionality, added better UI for downloading albums, created W.I.P. album placeholder
 (STILL WIP, DOWNLOADING ALBUM ISN't FULLY WORKING!!!!)</span></li>
                 <li><span class="version-date">V5 - 2/3/2025:</span> <span class="version-description">Added Tic Tac Toe mini-game with secret Z button, implemented computer AI logic, added victory modal for player wins</span></li>
+
+              <li><span class="version-date"> V5.5 - 2/4/2025:</span> <span class="version-description">Added secret cheat codes to Tic Tac Toe game, integrated special hidden features. Added new tracks including game-related audio files and unique musical selections</span></li>
             </ul>
         </div>
     </div>
@@ -490,6 +542,10 @@
                 border-radius: 5px;
                 cursor: pointer;
             ">Restart Game</button>
+            <div class="cheat-code-section">
+                <input type="text" id="cheat-code-input" placeholder="Enter Cheat Code" maxlength="6">
+                <button id="cheat-code-submit">Submit</button>
+            </div>
         </div>
     </div>
 
@@ -520,6 +576,13 @@
             border-radius: 5px;
             cursor: pointer;
         ">Close</button>
+    </div>
+
+    <div id="three-three-three-modal" class="three-three-three-modal">
+        <audio id="three-three-three-audio" loop>
+            <source src="lbtm.mp3" type="audio/mpeg">
+        </audio>
+        <span>333</span>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -775,6 +838,64 @@
                     return false;
                 }
             }
+
+            const cheatCodeInput = document.getElementById('cheat-code-input');
+            const cheatCodeSubmit = document.getElementById('cheat-code-submit');
+            const threeThreeThreeModal = document.getElementById('three-three-three-modal');
+            const threeThreeThreeAudio = document.getElementById('three-three-three-audio');
+
+            cheatCodeSubmit.addEventListener('click', () => {
+                if (cheatCodeInput.value === '114514') {
+                    // Automatically win the game for X
+                    const board = ['', '', '', '', '', '', '', '', ''];
+                    board[0] = 'X';
+                    board[1] = 'X';
+                    board[2] = 'X';
+                    ticTacToeBoard.innerHTML = '';
+                    for (let i = 0; i < 9; i++) {
+                        const cell = document.createElement('div');
+                        cell.classList.add('tic-tac-toe-cell');
+                        cell.dataset.index = i;
+                        cell.textContent = board[i];
+                        ticTacToeBoard.appendChild(cell);
+                    }
+                    gameStatus.textContent = 'Player X Wins!';
+                    ticTacToeVictoryModal.style.display = 'flex';
+                    cheatCodeInput.value = ''; // Clear input
+                } else if (cheatCodeInput.value === '333') {
+                    // Close Tic Tac Toe modal and show 333 modal
+                    ticTacToeModal.classList.remove('show');
+                    threeThreeThreeModal.style.display = 'flex';
+                    threeThreeThreeModal.style.backgroundImage = 'url("eye.gif")';
+                    threeThreeThreeModal.style.backgroundSize = 'cover';
+                    threeThreeThreeModal.style.backgroundPosition = 'center';
+                    
+                    // Play audio
+                    threeThreeThreeAudio.play();
+                    
+                    // Close 333 modal when clicked
+                    threeThreeThreeModal.addEventListener('click', () => {
+                        threeThreeThreeModal.style.display = 'none';
+                        threeThreeThreeAudio.pause();
+                        threeThreeThreeAudio.currentTime = 0;
+                    });
+
+                    cheatCodeInput.value = ''; // Clear input
+                } else {
+                    // Optional: Add some feedback for incorrect cheat code
+                    cheatCodeInput.style.borderColor = 'red';
+                    setTimeout(() => {
+                        cheatCodeInput.style.borderColor = 'var(--secondary-color)';
+                    }, 500);
+                }
+            });
+
+            // Allow enter key to submit cheat code
+            cheatCodeInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    cheatCodeSubmit.click();
+                }
+            });
         });
     </script>
 </body>

@@ -179,7 +179,16 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: 'Ech', artist: 'TToU', url: 'Ech.mp3' },
             { title: 'H4TR3D', artist: 'TToU', url: 'H4TR3D.mp3' },
             { title: 'Hopk', artist: 'TToU', url: 'Hopk.mp3' },
-            { title: 'Pohk', artist: 'TToU', url: 'Pohk.mp3' }
+            { title: 'Pohk', artist: 'TToU', url: 'Pohk.mp3' },
+            { title: '7-11', artist: 'TToU', url: '7-11.mp3' },
+            { title: 'K0N', artist: 'TToU', url: 'K0N.mp3' },
+            { title: 'NOO00O000OO0O0OOO0', artist: 'TToU', url: 'NOO00O000OO0O0OOO0.mp3' },
+            { title: 'Reccc', artist: 'TToU', url: 'Reccc.mp3' },
+            { title: 'Run4', artist: 'TToU', url: 'Run4.mp3' },
+            { title: 'ST0P', artist: 'TToU', url: 'ST0P.mp3' },
+            { title: 'Wobble', artist: 'TToU', url: 'Wobble.mp3' },
+            { title: 'On Call', artist: 'TToU', url: 'On%20Call.mp3' },
+            { title: '魔法少女はぜったい勝つ', artist: 'TToU', url: '魔法少女はぜったい勝つ.mp3' }
         ],
         2: [] // Currently empty, can be populated later
     };
