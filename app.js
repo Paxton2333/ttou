@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: 'Wobble', artist: 'TToU', url: 'Wobble.mp3' },
             { title: 'On Call', artist: 'TToU', url: 'On%20Call.mp3' },
             { title: '魔法少女はぜったい勝つ', artist: 'TToU', url: '魔法少女はぜったい勝つ.mp3' }
-        ],
+        ], 
         2: [] // Currently empty, can be populated later
     };
 
