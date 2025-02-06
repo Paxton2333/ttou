@@ -188,8 +188,15 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: 'ST0P', artist: 'TToU', url: 'ST0P.mp3' },
             { title: 'Wobble', artist: 'TToU', url: 'Wobble.mp3' },
             { title: 'On Call', artist: 'TToU', url: 'On%20Call.mp3' },
-            { title: '魔法少女はぜったい勝つ', artist: 'TToU', url: '魔法少女はぜったい勝つ.mp3' }
-        ], 
+            { title: '魔法少女はぜったい勝つ', artist: 'TToU', url: '魔法少女はぜったい勝つ.mp3' },
+            { title: '邪悪結社', artist: 'TToU', url: '邪悪結社.mp3' },
+            { title: '你的头为什么是尖尖的', artist: 'TToU', url: '你的头为什么是尖尖的.mp3' },
+            { title: 'Beyond the Veil', artist: 'TToU', url: 'Beyond%20the%20Veil.mp3' },
+            { title: 'Welcome Foundation', artist: 'TToU', url: 'Welcome%20Foundation.mp3' },
+            { title: '魔法少女の覚醒', artist: 'TToU', url: '魔法少女の覚醒.mp3' },
+            { title: '「Fight！最強魔法少女たちは今日も世界を救う！」', artist: 'TToU', url: '「Fight！最強魔法少女たちは今日も世界を救う！」.mp3' },
+            { title: '「三重の秘密：高校魔法少女たち」', artist: 'TToU', url: '「三重の秘密：高校魔法少女たち」.mp3' }
+        ],
         2: [] // Currently empty, can be populated later
     };
 
