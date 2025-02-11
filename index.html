@@ -402,6 +402,76 @@
             font-size: 10rem;
             font-weight: bold;
         }
+
+        /* Sidebar Enhancements */
+        .sidebar-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .album-sidebar-title {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            background: rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .album-sidebar-title:hover {
+            background: rgba(0,0,0,0.2);
+        }
+
+        .sidebar-playlist {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .sidebar-playlist ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar-playlist li {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .sidebar-playlist li:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+
+        .sidebar-playlist li span:first-child {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .sidebar-playlist li span:last-child {
+            font-size: 0.8rem;
+            color: #aaa;
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
@@ -839,64 +909,6 @@
                     return false;
                 }
             }
-
-            const cheatCodeInput = document.getElementById('cheat-code-input');
-            const cheatCodeSubmit = document.getElementById('cheat-code-submit');
-            const threeThreeThreeModal = document.getElementById('three-three-three-modal');
-            const threeThreeThreeAudio = document.getElementById('three-three-three-audio');
-
-            cheatCodeSubmit.addEventListener('click', () => {
-                if (cheatCodeInput.value === '114514') {
-                    // Automatically win the game for X
-                    const board = ['', '', '', '', '', '', '', '', ''];
-                    board[0] = 'X';
-                    board[1] = 'X';
-                    board[2] = 'X';
-                    ticTacToeBoard.innerHTML = '';
-                    for (let i = 0; i < 9; i++) {
-                        const cell = document.createElement('div');
-                        cell.classList.add('tic-tac-toe-cell');
-                        cell.dataset.index = i;
-                        cell.textContent = board[i];
-                        ticTacToeBoard.appendChild(cell);
-                    }
-                    gameStatus.textContent = 'Player X Wins!';
-                    ticTacToeVictoryModal.style.display = 'flex';
-                    cheatCodeInput.value = ''; // Clear input
-                } else if (cheatCodeInput.value === '333') {
-                    // Close Tic Tac Toe modal and show 333 modal
-                    ticTacToeModal.classList.remove('show');
-                    threeThreeThreeModal.style.display = 'flex';
-                    threeThreeThreeModal.style.backgroundImage = 'url("eye.gif")';
-                    threeThreeThreeModal.style.backgroundSize = 'cover';
-                    threeThreeThreeModal.style.backgroundPosition = 'center';
-                    
-                    // Play audio
-                    threeThreeThreeAudio.play();
-                    
-                    // Close 333 modal when clicked
-                    threeThreeThreeModal.addEventListener('click', () => {
-                        threeThreeThreeModal.style.display = 'none';
-                        threeThreeThreeAudio.pause();
-                        threeThreeThreeAudio.currentTime = 0;
-                    });
-
-                    cheatCodeInput.value = ''; // Clear input
-                } else {
-                    // Optional: Add some feedback for incorrect cheat code
-                    cheatCodeInput.style.borderColor = 'red';
-                    setTimeout(() => {
-                        cheatCodeInput.style.borderColor = 'var(--secondary-color)';
-                    }, 500);
-                }
-            });
-
-            // Allow enter key to submit cheat code
-            cheatCodeInput.addEventListener('keyup', (e) => {
-                if (e.key === 'Enter') {
-                    cheatCodeSubmit.click();
-                }
-            });
         });
     </script>
 </body>
