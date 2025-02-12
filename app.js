@@ -195,7 +195,15 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: 'Welcome Foundation', artist: 'TToU', url: 'Welcome%20Foundation.mp3' },
             { title: '魔法少女の覚醒', artist: 'TToU', url: '魔法少女の覚醒.mp3' },
             { title: '「Fight！最強魔法少女たちは今日も世界を救う！」', artist: 'TToU', url: '「Fight！最強魔法少女たちは今日も世界を救う！」.mp3' },
-            { title: '「三重の秘密：高校魔法少女たち」', artist: 'TToU', url: '「三重の秘密：高校魔法少女たち」.mp3' }
+            { title: '「三重の秘密：高校魔法少女たち」', artist: 'TToU', url: '「三重の秘密：高校魔法少女たち」.mp3' },
+            { title: 'UW2 Reasons', artist: 'TToU', url: 'UW2%20Reasons.mp3' },
+            { title: 'Morphin and Mimicin (Remastered)', artist: 'TToU', url: 'Morphin%20and%20Mimicin%20(Remastered).mp3' },
+            { title: 'Clinton Hantrence Ofrento', artist: 'TToU', url: 'Clinton%20Hantrence%20Ofrento.mp3' },
+            { title: '86-79-73-68-32-73-83-32-65-80-80-82-79-65-67-72-73-78-71 (Remastered)', artist: 'TToU', url: '86-79-73-68-32-73-83-32-65-80-80-82-79-65-67-72-73-78-71%20(Remastered).mp3' },
+            { title: '0FR3NT0', artist: 'TToU', url: '0FR3NT0.mp3' },
+            { title: '54867319', artist: 'TToU', url: '54867319.mp3' },
+            { title: 'RKER!!', artist: 'TToU', url: 'RKER!!.mp3' },
+            { title: 'The Reht', artist: 'TToU', url: 'The%20Reht.mp3' }
         ],
         2: [] // Currently empty, can be populated later
     };
