@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Add this to existing <style> section or styles.css **/
+        /* Add this to existing <style> section or styles.css */
         .log-button {
             position: fixed;
             top: 20px;
@@ -884,44 +884,40 @@
 
                     cheatCodeInput.value = ''; // Clear input
                 } else if (cheatCodeInput.value === '004') {
-                    // Create and fade in/out image
+                    // Create and show the rock image
                     const rockImage = document.createElement('div');
                     rockImage.style.cssText = `
                         position: fixed;
                         top: 50%;
                         left: 50%;
-                        transform: translate(-50%, -50%) scale(0.8);
+                        transform: translate(-50%, -50%);
                         width: 300px;
                         height: 300px;
                         background-image: url('rock.jpg');
                         background-size: cover;
                         background-position: center;
-                        z-index: 2000;
                         opacity: 0;
-                        transition: opacity 0.5s ease, transform 0.5s ease;
-                        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                        border-radius: 10px;
+                        z-index: 2000;
+                        transition: opacity 0.5s ease;
                     `;
                     document.body.appendChild(rockImage);
 
-                    // Play sound effect
+                    // Play rock sound effect
                     const rockSound = new Audio('rock.mp3');
                     rockSound.play();
 
-                    // Fade in
+                    // Fade in the image
                     setTimeout(() => {
                         rockImage.style.opacity = '1';
-                        rockImage.style.transform = 'translate(-50%, -50%) scale(1)';
                     }, 100);
 
-                    // Fade out and remove
+                    // Fade out and remove the image after 1 second
                     setTimeout(() => {
                         rockImage.style.opacity = '0';
-                        rockImage.style.transform = 'translate(-50%, -50%) scale(0.8)';
                         setTimeout(() => {
                             document.body.removeChild(rockImage);
                         }, 500);
-                    }, 1500);
+                    }, 1000);
                     cheatCodeInput.value = ''; // Clear input
                 } else {
                     // Optional: Add some feedback for incorrect cheat code
