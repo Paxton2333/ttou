@@ -509,7 +509,7 @@
 
               <li><span class="version-date"> V5.5 - 2/4/2025:</span> <span class="version-description">Added secret cheat codes to Tic Tac Toe game, integrated special hidden features. Added new tracks including game-related audio files and unique musical selections</span></li>
               <li><span class="version-date">V6 - 2/6/2025:</span> <span class="version-description">Added new tracks including magical girl themed songs and international language tracks</span></li>
-              <li><span class="version-date">V7 - 2/12/2025:</span> <span class="version-description">Added new tracks: L0L, 33R13, 1M C4LM L34V3 M3 4L0N3, H1GH M0M3NT0, UW2 Reasons, Morphin and Mimicin (Remastered), Clinton Hantrence Ofrento, 86-79-73-68-32-73-83-32-65-80-80-82-79-65-67-72-73-78-71 (Remastered), 0FR3NT0, 54867319, RKER!!, The Reht, L0L, 33R13, 1M C4LM L34V3 M3 4L0N3, H1GH M0M3NT0</span></li>
+              <li><span class="version-date">V7 - 2/12/2025:</span> <span class="version-description">Added new tracks: L0L, 33R13, 1M C4LM L34V3 M3 4L0N3, H1GH M0M3NT0, UW2 Reasons, Morphin and Mimicin (Remastered), Clinton Hantrence Ofrento, 86-79-73-68-32-73-83-32-65-80-80-82-79-65-67-72-73-78-71 (Remastered), 0FR3NT0, 54867319, RKER!!, The Reht</span></li>
             </ul>
         </div>
     </div>
@@ -882,42 +882,6 @@
                         threeThreeThreeAudio.currentTime = 0;
                     });
 
-                    cheatCodeInput.value = ''; // Clear input
-                } else if (cheatCodeInput.value === '004') {
-                    // Create and show the rock image
-                    const rockImage = document.createElement('div');
-                    rockImage.style.cssText = `
-                        position: fixed;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        width: 300px;
-                        height: 300px;
-                        background-image: url('rock.jpg');
-                        background-size: cover;
-                        background-position: center;
-                        opacity: 0;
-                        z-index: 2000;
-                        transition: opacity 0.5s ease;
-                    `;
-                    document.body.appendChild(rockImage);
-
-                    // Play rock sound effect
-                    const rockSound = new Audio('rock.mp3');
-                    rockSound.play();
-
-                    // Fade in the image
-                    setTimeout(() => {
-                        rockImage.style.opacity = '1';
-                    }, 100);
-
-                    // Fade out and remove the image after 1 second
-                    setTimeout(() => {
-                        rockImage.style.opacity = '0';
-                        setTimeout(() => {
-                            document.body.removeChild(rockImage);
-                        }, 500);
-                    }, 1000);
                     cheatCodeInput.value = ''; // Clear input
                 } else {
                     // Optional: Add some feedback for incorrect cheat code
