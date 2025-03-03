@@ -207,7 +207,14 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: 'L0L', artist: 'TToU', url: 'L0L.mp3' },
             { title: '33R13', artist: 'TToU', url: '33R13.mp3' },
             { title: '1M C4LM L34V3 M3 4L0N3', artist: 'TToU', url: '1M%20C4LM%20L34V3%20M3%20AL0N3.mp3' },
-            { title: 'H1GH M0M3NT0', artist: 'TToU', url: 'H1GH%20M0M3NT0.mp3' }
+            { title: 'H1GH M0M3NT0', artist: 'TToU', url: 'H1GH%20M0M3NT0.mp3' },
+            { title: 'Analogs', artist: 'TToU', url: 'Analogs.mp3' },
+            { title: 'LK', artist: 'TToU', url: 'LK.mp3' },
+            { title: 'Phonkage v3', artist: 'TToU', url: 'Phonkage%20v3.mp3' },
+            { title: 'ReggaetonBox', artist: 'TToU', url: 'ReggaetonBox.mp3' },
+            { title: 'Stoic Bomb', artist: 'TToU', url: 'Stoic%20Bomb.mp3' },
+            { title: 'Уйга', artist: 'TToU', url: 'Уйга.mp3' },
+            { title: 'Phonkage v2', artist: 'TToU', url: 'Phonkage%20v2.mp3' }
         ],
         2: [] // Currently empty, can be populated later
     };
