@@ -680,52 +680,123 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const logBtn = document.getElementById('log-btn');
-            const versionHistorySidebar = document.getElementById('version-history-sidebar');
+            let logClickCount = 0;
+            let secretCodeModal = null;
+
+            logBtn.addEventListener('click', () => {
+                const versionHistorySidebar = document.getElementById('version-history-sidebar');
+                versionHistorySidebar.classList.toggle('open');
+
+                logClickCount++;
+
+                if (logClickCount === 5) {
+                    if (!secretCodeModal) {
+                        secretCodeModal = document.createElement('div');
+                        secretCodeModal.innerHTML = `
+                            <div style="
+                                position: fixed;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
+                                background-color: var(--primary-color);
+                                padding: 30px;
+                                border-radius: 10px;
+                                z-index: 2000;
+                                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                                text-align: center;
+                                max-width: 400px;
+                                width: 90%;
+                            ">
+                                <button id="secret-code-close" style="
+                                    position: absolute;
+                                    top: 10px;
+                                    right: 10px;
+                                    background: none;
+                                    border: none;
+                                    color: var(--text-color);
+                                    font-size: 1.5rem;
+                                    cursor: pointer;
+                                    transition: color 0.3s ease;
+                                ">
+                                    &times;
+                                </button>
+                                <h2 style="
+                                    color: var(--secondary-color);
+                                ">Enter Code</h2>
+                                <input type="text" id="secret-code-input" placeholder="Enter Secret Code" style="
+                                    width: 100%;
+                                    padding: 10px;
+                                    margin-bottom: 15px;
+                                    background-color: var(--background-color);
+                                    color: var(--text-color);
+                                    border: 1px solid var(--secondary-color);
+                                    border-radius: 5px;
+                                ">
+                                <button id="secret-code-submit" style="
+                                    background-color: var(--secondary-color);
+                                    color: white;
+                                    border: none;
+                                    padding: 10px 20px;
+                                    border-radius: 5px;
+                                    cursor: pointer;
+                                ">Submit</button>
+                            </div>
+                        `;
+                        document.body.appendChild(secretCodeModal);
+                    } else {
+                        secretCodeModal.style.display = 'block';
+                    }
+
+                    logClickCount = 0;
+
+                    const secretCodeInput = secretCodeModal.querySelector('#secret-code-input');
+                    const secretCodeSubmit = secretCodeModal.querySelector('#secret-code-submit');
+                    const secretCodeClose = secretCodeModal.querySelector('#secret-code-close');
+
+                    secretCodeClose.addEventListener('click', () => {
+                        secretCodeModal.style.display = 'none';
+                    });
+
+                    secretCodeSubmit.addEventListener('click', () => {
+                        const code = secretCodeInput.value;
+                        if (code === 'segs') {
+                            window.location.href = 'https://paxton2333.github.io/naughtyplace';
+                        } else {
+                            secretCodeInput.style.borderColor = 'red';
+                            setTimeout(() => {
+                                secretCodeInput.style.borderColor = 'var(--secondary-color)';
+                            }, 500);
+                        }
+                        secretCodeInput.value = '';
+                    });
+
+                    secretCodeInput.addEventListener('keyup', (e) => {
+                        if (e.key === 'Enter') {
+                            secretCodeSubmit.click();
+                        }
+                    });
+                }
+            });
+
             const downloadAlbumsBtn = document.getElementById('download-albums-btn');
             const downloadAlbumsModal = document.getElementById('download-albums-modal');
             const closeDownloadModalBtn = document.getElementById('close-download-modal');
             const albumsGrid = document.getElementById('albums-grid');
 
-            const secretZButton = document.getElementById('secret-z-button');
-            const ticTacToeModal = document.getElementById('tic-tac-toe-modal');
-            const closeTicTacToeBtn = document.getElementById('close-tic-tac-toe-btn');
-            const ticTacToeBoard = document.getElementById('tic-tac-toe-board');
-            const gameStatus = document.getElementById('game-status');
-            const restartTicTacToeBtn = document.getElementById('restart-tic-tac-toe');
-            const ticTacToeVictoryModal = document.getElementById('tic-tac-toe-victory-modal');
-            const victoryCloseBtn = document.getElementById('victory-close-btn');
-
-            // Close version history when clicking outside
-            document.addEventListener('click', (event) => {
-                if (!versionHistorySidebar.contains(event.target) && 
-                    !logBtn.contains(event.target) && 
-                    versionHistorySidebar.classList.contains('open')) {
-                    versionHistorySidebar.classList.remove('open');
-                }
-            });
-
-            logBtn.addEventListener('click', () => {
-                versionHistorySidebar.classList.toggle('open');
-            });
-
-            // Close modal when clicking close button
             closeDownloadModalBtn.addEventListener('click', () => {
                 downloadAlbumsModal.classList.remove('show');
             });
 
-            // Close modal when clicking outside
             downloadAlbumsModal.addEventListener('click', (e) => {
                 if (e.target === downloadAlbumsModal) {
                     downloadAlbumsModal.classList.remove('show');
                 }
             });
 
-            // Open download albums modal
             downloadAlbumsBtn.addEventListener('click', () => {
                 downloadAlbumsModal.classList.add('show');
             });
 
-            // Function to download album
             async function downloadAlbum(albumId) {
                 const albumSongs = {
                     1: [
@@ -740,7 +811,6 @@
                     1: 'The Tale of Universe OST'
                 };
 
-                // Async download of each song
                 const downloadPromises = albumSongs[albumId].map(async (song) => {
                     try {
                         const response = await fetch(song.url);
@@ -751,18 +821,14 @@
                     }
                 });
 
-                // Wait for all downloads to complete
                 await Promise.all(downloadPromises);
 
-                // Generate zip
                 const zipBlob = await zip.generateAsync({type: 'blob'});
                 saveAs(zipBlob, `P4XT0N_Series_${albumNames[albumId]}.zip`);
 
-                // Close the modal after download
                 downloadAlbumsModal.classList.remove('show');
             }
 
-            // Album download functionality
             albumsGrid.addEventListener('click', async (e) => {
                 if (e.target.classList.contains('album-download-option')) {
                     const albumId = e.target.dataset.album;
@@ -770,7 +836,6 @@
                 }
             });
 
-            // Update albums grid
             albumsGrid.innerHTML = `
                 <button class="album-download-option" data-album="1">
                     <span>The Tale of Universe OST</span>
@@ -778,11 +843,19 @@
                 </button>
             `;
 
-            // Reveal secret Z button when cursor is near
+            const secretZButton = document.getElementById('secret-z-button');
+            const ticTacToeModal = document.getElementById('tic-tac-toe-modal');
+            const closeTicTacToeBtn = document.getElementById('close-tic-tac-toe-btn');
+            const ticTacToeBoard = document.getElementById('tic-tac-toe-board');
+            const gameStatus = document.getElementById('game-status');
+            const restartTicTacToeBtn = document.getElementById('restart-tic-tac-toe');
+            const ticTacToeVictoryModal = document.getElementById('tic-tac-toe-victory-modal');
+            const victoryCloseBtn = document.getElementById('victory-close-btn');
+
             document.addEventListener('mousemove', (e) => {
                 const windowWidth = window.innerWidth;
                 const windowHeight = window.innerHeight;
-                const threshold = 100; // pixels from the bottom right corner
+                const threshold = 100;
 
                 if (e.clientX > windowWidth - threshold && e.clientY > windowHeight - threshold) {
                     secretZButton.classList.add('visible');
@@ -791,25 +864,21 @@
                 }
             });
 
-            // Open Tic Tac Toe Modal
             secretZButton.addEventListener('click', () => {
                 ticTacToeModal.classList.add('show');
                 initializeTicTacToe();
             });
 
-            // Close Tic Tac Toe Modal
             closeTicTacToeBtn.addEventListener('click', () => {
                 ticTacToeModal.classList.remove('show');
             });
 
-            // Restart Tic Tac Toe game
             restartTicTacToeBtn.addEventListener('click', () => {
                 ticTacToeBoard.innerHTML = '';
                 gameStatus.textContent = 'Player X\'s Turn';
                 initializeTicTacToe();
             });
 
-            // Close Tic Tac Toe Victory Modal
             victoryCloseBtn.addEventListener('click', () => {
                 ticTacToeVictoryModal.style.display = 'none';
             });
@@ -819,7 +888,6 @@
                 let currentPlayer = 'X';
                 let gameActive = true;
 
-                // Create board cells
                 ticTacToeBoard.innerHTML = '';
                 for (let i = 0; i < 9; i++) {
                     const cell = document.createElement('div');
@@ -934,7 +1002,6 @@
 
             cheatCodeSubmit.addEventListener('click', () => {
                 if (cheatCodeInput.value === '114514') {
-                    // Automatically win the game for X
                     const board = ['', '', '', '', '', '', '', '', ''];
                     board[0] = 'X';
                     board[1] = 'X';
@@ -949,28 +1016,24 @@
                     }
                     gameStatus.textContent = 'Player X Wins!';
                     ticTacToeVictoryModal.style.display = 'flex';
-                    cheatCodeInput.value = ''; // Clear input
+                    cheatCodeInput.value = '';
                 } else if (cheatCodeInput.value === '333') {
-                    // Close Tic Tac Toe modal and show 333 modal
                     ticTacToeModal.classList.remove('show');
                     threeThreeThreeModal.style.display = 'flex';
                     threeThreeThreeModal.style.backgroundImage = 'url("eye.gif")';
                     threeThreeThreeModal.style.backgroundSize = 'cover';
                     threeThreeThreeModal.style.backgroundPosition = 'center';
                     
-                    // Play audio
                     threeThreeThreeAudio.play();
                     
-                    // Close 333 modal when clicked
                     threeThreeThreeModal.addEventListener('click', () => {
                         threeThreeThreeModal.style.display = 'none';
                         threeThreeThreeAudio.pause();
                         threeThreeThreeAudio.currentTime = 0;
                     });
 
-                    cheatCodeInput.value = ''; // Clear input
+                    cheatCodeInput.value = '';
                 } else {
-                    // Optional: Add some feedback for incorrect cheat code
                     cheatCodeInput.style.borderColor = 'red';
                     setTimeout(() => {
                         cheatCodeInput.style.borderColor = 'var(--secondary-color)';
@@ -978,71 +1041,20 @@
                 }
             });
 
-            // Allow enter key to submit cheat code
             cheatCodeInput.addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') {
                     cheatCodeSubmit.click();
                 }
             });
 
-            // Code Test Feature with Draggability
             const pageTitle = document.querySelector('h1[w-tid="12"]');
             let clickCount = 0;
             let codeTestModal = null;
-            let isDragging = false;
-            let currentX;
-            let currentY;
-            let initialX;
-            let initialY;
-            let xOffset = 0;
-            let yOffset = 0;
-
-            function dragElement(elmnt) {
-                const dragHeader = elmnt.querySelector('h2');
-                
-                dragHeader.addEventListener('mousedown', dragStart, false);
-                document.addEventListener('mouseup', dragEnd, false);
-                document.addEventListener('mousemove', drag, false);
-
-                function dragStart(e) {
-                    initialX = e.clientX - xOffset;
-                    initialY = e.clientY - yOffset;
-
-                    if (e.target === dragHeader) {
-                        isDragging = true;
-                    }
-                }
-
-                function dragEnd(e) {
-                    initialX = currentX;
-                    initialY = currentY;
-
-                    isDragging = false;
-                }
-
-                function drag(e) {
-                    if (isDragging) {
-                        e.preventDefault();
-                        currentX = e.clientX - initialX;
-                        currentY = e.clientY - initialY;
-
-                        xOffset = currentX;
-                        yOffset = currentY;
-
-                        setTranslate(currentX, currentY, elmnt);
-                    }
-                }
-
-                function setTranslate(xPos, yPos, el) {
-                    el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-                }
-            }
 
             pageTitle.addEventListener('click', () => {
                 clickCount++;
-                
+
                 if (clickCount === 3) {
-                    // Create modal if it doesn't exist
                     if (!codeTestModal) {
                         codeTestModal = document.createElement('div');
                         codeTestModal.innerHTML = `
@@ -1099,22 +1111,16 @@
                             </div>
                         `;
                         document.body.appendChild(codeTestModal);
-                        
-                        // Enable dragging
-                        dragElement(codeTestModal.querySelector('div'));
                     } else {
                         codeTestModal.style.display = 'block';
                     }
 
-                    // Reset click count
                     clickCount = 0;
 
-                    // Add event listener for code submission
                     const codeInput = codeTestModal.querySelector('#code-test-input');
                     const codeSubmit = codeTestModal.querySelector('#code-test-submit');
                     const codeClose = codeTestModal.querySelector('#code-test-close');
 
-                    // Close button functionality
                     codeClose.addEventListener('click', () => {
                         codeTestModal.style.display = 'none';
                     });
@@ -1168,7 +1174,7 @@
                                 }, 3000);
                                 break;
                         }
-                        codeInput.value = ''; // Clear input
+                        codeInput.value = '';
                     });
                 }
             });
@@ -1178,7 +1184,6 @@
             const knowallYesBtn = document.getElementById('knowall-yes-btn');
             const knowallNoBtn = document.getElementById('knowall-no-btn');
 
-            // Hover effect to expand button text
             goKnowallButton.addEventListener('mouseenter', () => {
                 goKnowallButton.textContent = 'Go to KnowAll';
                 goKnowallButton.classList.add('expanded');
@@ -1189,22 +1194,18 @@
                 goKnowallButton.classList.remove('expanded');
             });
 
-            // Show confirmation modal when button is clicked
             goKnowallButton.addEventListener('click', () => {
                 knowallConfirmationModal.style.display = 'flex';
             });
 
-            // Yes button - navigate to KnowAll
             knowallYesBtn.addEventListener('click', () => {
                 window.location.href = 'https://Paxton2333.github.io/knowall';
             });
 
-            // No button - close modal
             knowallNoBtn.addEventListener('click', () => {
                 knowallConfirmationModal.style.display = 'none';
             });
 
-            // Close modal when clicking outside
             knowallConfirmationModal.addEventListener('click', (e) => {
                 if (e.target === knowallConfirmationModal) {
                     knowallConfirmationModal.style.display = 'none';
