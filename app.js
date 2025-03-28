@@ -214,7 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: 'ReggaetonBox', artist: 'TToU', url: 'ReggaetonBox.mp3' },
             { title: 'Stoic Bomb', artist: 'TToU', url: 'Stoic%20Bomb.mp3' },
             { title: 'Уйга', artist: 'TToU', url: 'Уйга.mp3' },
-            { title: 'Phonkage v2', artist: 'TToU', url: 'Phonkage%20v2.mp3' }
+            { title: 'Phonkage v2', artist: 'TToU', url: 'Phonkage%20v2.mp3' },
+            { title: 'Frenzy v2', artist: 'TToU', url: 'Frenzy%20v2.mp3' },
+            { title: 'Phonkage v6', artist: 'TToU', url: 'Phonkage%20v6.mp3' },
+            { title: 'Black Tracks', artist: 'TToU', url: 'Black%20Tracks.mp3' }
         ],
         2: [] // Currently empty, can be populated later
     };
