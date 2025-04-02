@@ -206,19 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
             { title: 'The Reht', artist: 'TToU', url: 'The%20Reht.mp3' },
             { title: 'L0L', artist: 'TToU', url: 'L0L.mp3' },
             { title: '33R13', artist: 'TToU', url: '33R13.mp3' },
-            { title: '1M C4LM L34V3 M3 4L0N3', artist: 'TToU', url: '1M%20C4LM%20L34V3%20M3%204L0N3.mp3' },
-            { title: 'H1GH M0M3NT0', artist: 'TToU', url: 'H1GH%20M0M3NT0.mp3' },
-            { title: 'Analogs', artist: 'TToU', url: 'Analogs.mp3' },
-            { title: 'LK', artist: 'TToU', url: 'LK.mp3' },
-            { title: 'Phonkage v3', artist: 'TToU', url: 'Phonkage%20v3.mp3' },
-            { title: 'ReggaetonBox', artist: 'TToU', url: 'ReggaetonBox.mp3' },
-            { title: 'Stoic Bomb', artist: 'TToU', url: 'Stoic%20Bomb.mp3' },
-            { title: 'Уйга', artist: 'TToU', url: 'Уйга.mp3' },
-            { title: 'Phonkage v2', artist: 'TToU', url: 'Phonkage%20v2.mp3' },
-            { title: 'Frenzy v2', artist: 'TToU', url: 'Frenzy%20v2.mp3' },
-            { title: 'Phonkage v6', artist: 'TToU', url: 'Phonkage%20v6.mp3' },
-            { title: 'Black Tracks', artist: 'TToU', url: 'Black%20Tracks.mp3' },
-            { title: 'The time is up (Remastered)', artist: 'TToU', url: 'The%20time%20is%20up%20%28Remastered%29.mp3' }
+            { title: '1M C4LM L34V3 M3 4L0N3', artist: 'TToU', url: '1M%20C4LM%20L34V3%20M3%20AL0N3.mp3' },
+            { title: 'H1GH M0M3NT0', artist: 'TToU', url: 'H1GH%20M0M3NT0.mp3' }
         ],
         2: [] // Currently empty, can be populated later
     };
@@ -435,6 +424,39 @@ document.addEventListener('DOMContentLoaded', () => {
         const time = (e.target.value / 100) * audioPlayer.duration;
         audioPlayer.currentTime = time;
     });
+
+    // Raw file link functionality
+    const rawFileLinkBtn = document.createElement('button');
+    rawFileLinkBtn.innerHTML = '<i class="fas fa-link"></i>';
+    rawFileLinkBtn.id = 'raw-file-link-btn';
+    rawFileLinkBtn.style.background = 'none';
+    rawFileLinkBtn.style.border = 'none';
+    rawFileLinkBtn.style.color = 'var(--text-color)';
+    rawFileLinkBtn.style.cursor = 'pointer';
+    rawFileLinkBtn.style.marginRight = '10px';
+    rawFileLinkBtn.style.fontSize = '20px';
+    rawFileLinkBtn.style.transition = 'color 0.3s ease';
+    rawFileLinkBtn.addEventListener('mouseover', () => {
+        rawFileLinkBtn.style.color = 'var(--secondary-color)';
+    });
+    rawFileLinkBtn.addEventListener('mouseout', () => {
+        rawFileLinkBtn.style.color = 'var(--text-color)';
+    });
+
+    rawFileLinkBtn.addEventListener('click', () => {
+        // If no song is playing, return early
+        if (!songs[currentSongIndex]) return;
+
+        const currentSong = songs[currentSongIndex];
+        const rawFileUrl = currentSong.url;
+
+        // Open the raw file URL in a new tab
+        window.open(rawFileUrl, '_blank');
+    });
+
+    // Find the volume control section and insert the raw file link button
+    const volumeControl = document.querySelector('.volume-control');
+    volumeControl.insertBefore(rawFileLinkBtn, downloadSongBtn);
 
     // Download current song functionality
     downloadSongBtn.addEventListener('click', () => {
